@@ -1,15 +1,23 @@
 # This Dockerfile is used to build an image containing basic stuff to be used as a Jenkins slave build node.
-FROM seven10/emc-libs
+FROM ubuntu:trusty
 MAINTAINER kmilner "kmilner@seven10storage.com"
 
-ENV MAVEN_VERSION 3.3.3
-
-# Make sure the package repository is up to date.
-RUN apt-get update
-RUN apt-get -y upgrade
-
+# Install Oracle Java 8
+RUN \
+  echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list && \
+  apt-get update -q && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common python-software-properties && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update -q && \
+  echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer openssh-server curl && \
+  rm -rf /var/cache/oracle-jdk8-installer && \
+# clean up tmp install files
+  rm -rf /var/lib/apt/lists/*  && \  
+  apt-get clean
 # Install a basic SSH server
-RUN apt-get install -y openssh-server
+
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 RUN mkdir -p /var/run/sshd && \
 # generate a default locale to keep certain warnings at bay
