@@ -12,5 +12,5 @@ COPY bin/setup-docker-and-start-jenkins.sh /usr/local/bin/setup-docker-and-start
 USER jenkins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
-
+USER root
 CMD ["/usr/local/bin/setup-docker-and-start-jenkins.sh"]
