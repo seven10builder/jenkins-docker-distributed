@@ -26,6 +26,7 @@ RUN mkdir -p /var/run/sshd && \
 #  password="some-good-passwd"; perl -e 'printf("%s\n", crypt($ARGV[0], "password"))' "$password"
    useradd -s /bin/bash -d /home/jenkins -p "paZMSFlwB0Lw6" jenkins && \
    mkdir -p /home/jenkins && \
+   chown -R jenkins:jenkins /home/jenkins
    echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 COPY bin/setup-docker-and-start-ssh.sh /usr/local/bin/setup-docker-and-start-ssh.sh

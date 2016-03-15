@@ -29,7 +29,4 @@ if ! id -nG "$JUSER" | grep -qw "$DOCKER_GROUP"; then
 	adduser $JUSER $DOCKER_GROUP
 fi
 
-
-chown -R $JUSER:$JUSER /home/jenkins
-
 exec /usr/sbin/sshd -D
