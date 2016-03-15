@@ -11,7 +11,7 @@ RUN \
   apt-get update -q && \
   echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer openssh-server curl && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer openssh-server curl lxc libsystemd-journal0 && \
   rm -rf /var/cache/oracle-jdk8-installer && \
 # clean up tmp install files
   rm -rf /var/lib/apt/lists/*  && \  
@@ -24,9 +24,12 @@ RUN mkdir -p /var/run/sshd && \
    locale-gen en_US.UTF-8 && \
 #  Add user jenkins to the image. Note: the password is encrypted via
 #  password="some-good-passwd"; perl -e 'printf("%s\n", crypt($ARGV[0], "password"))' "$password"
-   useradd -m -p "paZMSFlwB0Lw6" jenkins
+   useradd -s /bin/bash -d /home/jenkins -p "paZMSFlwB0Lw6" jenkins && \
+   mkdir -p /home/jenkins && \
+   echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
+COPY bin/setup-docker-and-start-ssh.sh /usr/local/bin/setup-docker-and-start-ssh.sh
 # Standard SSH port
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/local/bin/setup-docker-and-start-ssh.sh"]
