@@ -11,7 +11,7 @@ RUN \
   apt-get update -q && \
   echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer openssh-server curl lxc && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer openssh-server curl lxc vim && \
   rm -rf /var/cache/oracle-jdk8-installer && \
 # clean up tmp install files
   rm -rf /var/lib/apt/lists/*  && \  
@@ -31,6 +31,13 @@ RUN mkdir -p /var/run/sshd && \
 
 
 COPY bin/setup-docker-and-start-ssh.sh /usr/local/bin/setup-docker-and-start-ssh.sh
+COPY bin/create-docker-container.sh /usr/local/bin/create-docker-container.sh
+COPY bin/stop-docker-container.sh /usr/local/bin/stop-docker-container.sh
+COPY bin/start-docker-container.sh /usr/local/bin/start-docker-container.sh
+COPY bin/remove-docker-container.sh /usr/local/bin/remove-docker-container.sh
+COPY bin/pull-docker-image.sh /usr/local/bin/pull-docker-image.sh
+
+RUN chmod +x /usr/local/bin/setup-docker-and-start-ssh.sh /usr/local/bin/create-docker-container.sh /usr/local/bin/stop-docker-container.sh /usr/local/bin/start-docker-container.sh /usr/local/bin/remove-docker-container.sh /usr/local/bin/pull-docker-image.sh
 # Standard SSH port
 EXPOSE 22
 
