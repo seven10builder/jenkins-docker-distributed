@@ -13,18 +13,21 @@ else
 fi
 
 START_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock -X POST http:/containers/$CONTAINER_NAME/start)
-RVAL=$START_RESULT
 case "$START_RESULT" in
      500)
+          RVAL=5
           echo "Server Error, cannot start container";;
      404)
+          RVAL=4
           echo "Container not Found, cannot start container";;
      304)
+          RVAL=3
           echo "Container already started, cannot start container";;
      204)
-          echo "start-docker-container executed successfully."
-          RVAL=0;;
+          RVAL=0
+          echo "start-docker-container executed successfully.";;
      *)
+          RVAL=1
           echo "Unknown error '$START_RESULT', cannot start container";;
 esac
 exit $RVAL

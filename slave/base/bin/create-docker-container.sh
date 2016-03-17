@@ -22,18 +22,21 @@ fi
 
 # next create the container instance
 CREATE_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock  -X POST -H "Content-Type: application/json" http:/containers/create?name=$CONTAINER_NAME -d $CONTAINER_SETTINGS)
-RVAL=$CREATE_RESULT
 case "$CREATE_RESULT" in
      500)
+          RVAL=5
           echo "Server Error, cannot create container";;
      404)
+          RVAL=4
           echo "Container not Found, cannot create container";;
      406)
+          RVAL=6
           echo "Impossible to attach, cannot create container";;
      201)
-          echo "create-container executed successfully"
-          RVAL=0;;
+          RVAL=0
+          echo "create-container executed successfully";;
      *)
+          RVAL=1
           echo "Unknown error '$CREATE_RESULT', cannot create container";;
 esac
 exit $RVAL

@@ -40,19 +40,22 @@ echo "Force Stop ='$FORCE_STOP'"
 
 
 STOP_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock -X DELETE http:/containers/$CONTAINER_NAME?v=$REMOVE_VOLUMES&force=$FORCE_STOP)
-RVAL=$STOP_RESULT
 case "$STOP_RESULT" in
      500)
+          RVAL=5
           echo "Server Error, cannot stop container";;
      404)
+          RVAL=4
             echo "Container not Found, cannot stop container";;
      304)
-          echo "Container already stopped, cannot stop container, ignoring"
-          RVAL=0;;
+          RVAL=0
+          echo "Container already stopped, cannot stop container, ignoring";;
      204)
-          echo "remove-docker-container executed successfully."
-          RVAL=0;;
+          RVAL=0
+          echo "remove-docker-container executed successfully.";;
+
      *)
+          RVAL=1
           echo "Unknown error '$STOP_RESULT', cannot stop container";;
 esac
 exit $RVAL

@@ -20,14 +20,15 @@ fi
 
 
 PULL_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock -X POST http:/images/create?fromImage=$IMAGE_NAME:$TAG_NAME)
-RVAL=$PULL_RESULT
 case "$PULL_RESULT" in
      500) 
+          RVAL=5
           echo "Server Error, cannot pull image";;
      200)
-          echo "pull-docker-image completed successfully"
-          RVAL=0;;
+          RVAL=0
+          echo "pull-docker-image completed successfully";;
      *)
+          RVAL=1
           echo "Unknown error '$PULL_RESULT', cannot pull image";;
 esac
 exit $RVAL
