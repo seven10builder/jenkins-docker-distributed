@@ -21,7 +21,7 @@ fi
 
 
 # next create the container instance
-CREATE_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock  -X POST -H "Content-Type: application/json" http:/containers/create?name=$CONTAINER_NAME -d $CONTAINER_SETTINGS)
+CREATE_RESULT=$(curl --write-out %{http_code} --silent --output /dev/nul --unix-socket /var/run/docker.sock  -X POST -H "Content-Type: application/json" http:/containers/create?name=$CONTAINER_NAME -d "$CONTAINER_SETTINGS")
 case "$CREATE_RESULT" in
      500)
           RVAL=5
