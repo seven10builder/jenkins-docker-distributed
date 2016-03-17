@@ -34,24 +34,24 @@ else
 fi
 
 echo "--- Creating Docker container ---"
-create-docker-container.sh $CONTAINER_NAME $CONTAINER_SETTINGS
+create-docker-container.sh "$CONTAINER_NAME" "$CONTAINER_SETTINGS"
 rval=$?
 echo $rval
 if [ $rval -eq 4 ]; then
      echo "--- Image not found in local repository, pulling from remote ---"
-     pull-docker-image.sh $IMAGE_NAME $TAG_NAME
+     pull-docker-image.sh "$IMAGE_NAME" "$TAG_NAME"
      if [ $? -ne 0 ]; then
            echo "Image pull failed. Aborting"
            exit 1
      fi
      "--- Attempting to create docker container again ---"
-     create-docker-container.sh $CONTAINER_NAME $CONTAINER_SETTINGS
+     create-docker-container.sh "$CONTAINER_NAME" "$CONTAINER_SETTINGS"
      if [ $? -ne 0 ]; then
           echo "Could not create container after pull. Aborting."
           exit 1
      fi
 fi
 echo "--- Starting Docker container ---"
-start-docker-container.sh $CONTAINER_NAME
+start-docker-container.sh "$CONTAINER_NAME"
 exit $?
 
