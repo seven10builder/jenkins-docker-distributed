@@ -1,5 +1,5 @@
 # This Dockerfile is used to build an image containing basic stuff to be used as a Jenkins slave build node.
-FROM seven10builder/jenkins-slave-base:0.1
+FROM seven10builder/jenkins-slave-base:0.2
 MAINTAINER kmilner "kmilner@seven10storage.com"
 
 ENV MAVEN_VERSION 3.3.3

@@ -31,14 +31,9 @@ RUN mkdir -p /var/run/sshd && \
 
 
 COPY bin/setup-docker-and-start-ssh.sh /usr/local/bin/setup-docker-and-start-ssh.sh
-COPY bin/create-docker-container.sh /usr/local/bin/create-docker-container.sh
-COPY bin/stop-docker-container.sh /usr/local/bin/stop-docker-container.sh
-COPY bin/start-docker-container.sh /usr/local/bin/start-docker-container.sh
-COPY bin/remove-docker-container.sh /usr/local/bin/remove-docker-container.sh
-COPY bin/pull-docker-image.sh /usr/local/bin/pull-docker-image.sh
-COPY bin/run-docker-container.sh /usr/local/bin/run-docker-container.sh
+COPY bin/phone-home.sh /usr/local/bin/phone-home.sh
 
-RUN chmod +x /usr/local/bin/setup-docker-and-start-ssh.sh /usr/local/bin/create-docker-container.sh /usr/local/bin/stop-docker-container.sh /usr/local/bin/start-docker-container.sh /usr/local/bin/remove-docker-container.sh /usr/local/bin/pull-docker-image.sh /usr/local/bin/run-docker-container.sh
+RUN chmod +x /usr/local/bin/setup-docker-and-start-ssh.sh /usr/local/bin/phone-home.sh
 # Standard SSH port
 EXPOSE 22
 
