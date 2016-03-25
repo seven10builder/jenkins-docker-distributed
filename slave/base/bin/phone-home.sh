@@ -1,8 +1,9 @@
 #!/bin/bash
-if [[ -z $MASTER_ADDRESS ]]; then
-	echo "The jenkins master address must be specified in the variable MASTER_ADDRESS"
+if [[ -z $1 ]]; then
+	echo "Usage: phone-home.sh <master-ip-address>"
 	exit 1
 fi
+MASTER_ADDRESS="$1"
 SLAVE_PATH=/home/jenkins/bin
 
 mkdir -p $SLAVE_PATH
