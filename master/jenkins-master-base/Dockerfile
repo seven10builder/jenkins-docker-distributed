@@ -1,11 +1,9 @@
-FROM jenkins:1.642.2
+FROM jenkins:2.0-alpine
 MAINTAINER kmilner@seven10storage.com
 
 USER root
-RUN apt-get update \
-      && apt-get install -y sudo git-all \
-      && rm -rf /var/lib/apt/lists/*
-RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+RUN apk add --update git &&\
+    echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 COPY bin/setup-docker-and-start-jenkins.sh /usr/local/bin/setup-docker-and-start-jenkins.sh
 

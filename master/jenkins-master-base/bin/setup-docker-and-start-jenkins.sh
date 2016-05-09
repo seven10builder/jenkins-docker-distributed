@@ -11,12 +11,12 @@ GID=$(ls -aln /var/run/docker.sock  | awk '{print $3}')
 
 if ! getent group $DOCKER_GID; then
 	echo creating docker group $DOCKER_GID
-	addgroup --gid $DOCKER_GID docker
+	addgroup -g $DOCKER_GID docker
 fi
 
 if ! getent group $GID; then
 	echo creating $JUSER group $GID
-	addgroup --gid $GID $JUSER
+	addgroup -g $GID $JUSER
 fi
 
 if ! getent passwd $JUSER; then
