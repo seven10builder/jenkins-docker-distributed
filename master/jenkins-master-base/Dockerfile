@@ -1,4 +1,4 @@
-FROM jenkins:2.0-alpine
+FROM jenkins:2.3-alpine
 MAINTAINER kmilner@seven10storage.com
 
 USER root
