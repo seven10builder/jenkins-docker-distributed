@@ -2,8 +2,12 @@ FROM jenkinsci/jenkins:2.4
 MAINTAINER kmilner@seven10storage.com
 
 USER root
-RUN apk add --update git &&\
-    echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+USER root
+RUN apt-get update \
+      && apt-get install -y sudo git-all \
+      && rm -rf /var/lib/apt/lists/*
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 COPY bin/setup-docker-and-start-jenkins.sh /usr/local/bin/setup-docker-and-start-jenkins.sh
 
