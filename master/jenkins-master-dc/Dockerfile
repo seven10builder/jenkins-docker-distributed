@@ -1,4 +1,4 @@
-FROM seven10builder/jenkins-master-base:2.0-alpine
+FROM seven10builder/jenkins-master-base:2.0-latest
 MAINTAINER kmilner@seven10storage.com
 
 USER root
