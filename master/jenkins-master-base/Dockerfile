@@ -3,7 +3,6 @@ MAINTAINER kmilner@seven10storage.com
 
 USER root
 
-USER root
 RUN apt-get update \
       && apt-get install -y sudo git-all \
       && rm -rf /var/lib/apt/lists/*
