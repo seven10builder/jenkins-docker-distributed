@@ -2,7 +2,8 @@ FROM seven10builder/jenkins-master-base:2.0-latest
 MAINTAINER kmilner@seven10storage.com
 
 USER root
-RUN apk add --update py-pip && \
+RUN apt-get update &&\
+	apt-get install -y python-pip && \
 	pip install --upgrade pip &&\
 	pip install docker-cloud
 
